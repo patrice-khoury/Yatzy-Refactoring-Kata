@@ -57,7 +57,7 @@ public class Yatzy {
 		final Map<Integer, Integer> statistics = getStatistics(dice);
 		
 		return statistics.entrySet().stream()
-			.filter((statistic)-> statistic.getValue() > 1)
+			.filter((statistic)-> statistic.getValue() >= 2)
 			.map(Entry::getKey)
 			.max(Integer::compare)
 			.map(value -> value * 2)
@@ -68,7 +68,7 @@ public class Yatzy {
 		final Map<Integer, Integer> statistics = getStatistics(dice);
 		
 		return statistics.entrySet().stream()
-			.filter((statistic)-> statistic.getValue() > 1)
+			.filter((statistic)-> statistic.getValue() >= 2)
 			.map(Entry::getKey)
 			.map(value -> value * 2)
 			.mapToInt(Integer::valueOf)
@@ -79,7 +79,7 @@ public class Yatzy {
 		final Map<Integer, Integer> statistics = getStatistics(dice);
 		
 		return statistics.entrySet().stream()
-			.filter((statistic)-> statistic.getValue() == 3)
+			.filter((statistic)-> statistic.getValue() >= 3)
 			.map(Entry::getKey)
 			.map(value -> value * 3)
 			.mapToInt(Integer::valueOf)
