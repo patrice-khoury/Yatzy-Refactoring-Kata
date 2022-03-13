@@ -1,10 +1,14 @@
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 
 public class Yatzy {
+	private final BiPredicate<Entry<Integer, Integer>, Integer> filterNumberOfEntries = (statistic, nbEntries)-> statistic.getValue() >= nbEntries;
+	private final BiFunction<Integer, Integer, Integer> sumEntries = (value, number)-> value * number;
+	
 	private int sums(final int valueToSum, final int... dice) {
 		return Arrays.stream(dice)
 			.filter(value-> value == valueToSum)
@@ -19,6 +23,17 @@ public class Yatzy {
 		});
 		
 		return statistics;
+	}
+	
+	private int computeOfAKind(final int numberOfAKind, final int... dice) {
+		final Map<Integer, Integer> statistics = getStatistics(dice);
+		
+		return statistics.entrySet().stream()
+			.filter(statistic-> filterNumberOfEntries.test(statistic, numberOfAKind))
+			.map(Entry::getKey)
+			.map(value -> sumEntries.apply(value, numberOfAKind))
+			.mapToInt(Integer::valueOf)
+			.sum();
 	}
 	
 	public int chance(final int... dice) {
@@ -57,44 +72,23 @@ public class Yatzy {
 		final Map<Integer, Integer> statistics = getStatistics(dice);
 		
 		return statistics.entrySet().stream()
-			.filter((statistic)-> statistic.getValue() >= 2)
+			.filter(statistic-> filterNumberOfEntries.test(statistic, 2))
 			.map(Entry::getKey)
 			.max(Integer::compare)
-			.map(value -> value * 2)
+			.map(value ->sumEntries.apply(value, 2))
 			.orElse(0);
 	}
 
 	public int two_pair(final int... dice) {
-		final Map<Integer, Integer> statistics = getStatistics(dice);
-		
-		return statistics.entrySet().stream()
-			.filter((statistic)-> statistic.getValue() >= 2)
-			.map(Entry::getKey)
-			.map(value -> value * 2)
-			.mapToInt(Integer::valueOf)
-			.sum();
+		return computeOfAKind(2, dice);
 	}
 
 	public int three_of_a_kind(final int... dice) {
-		final Map<Integer, Integer> statistics = getStatistics(dice);
-		
-		return statistics.entrySet().stream()
-			.filter((statistic)-> statistic.getValue() >= 3)
-			.map(Entry::getKey)
-			.map(value -> value * 3)
-			.mapToInt(Integer::valueOf)
-			.sum();
+		return computeOfAKind(3, dice);
 	}
 	
 	public int four_of_a_kind(final int... dice) {
-		final Map<Integer, Integer> statistics = getStatistics(dice);
-		
-		return statistics.entrySet().stream()
-			.filter((statistic)-> statistic.getValue() >= 4)
-			.map(Entry::getKey)
-			.map(value -> value * 4)
-			.mapToInt(Integer::valueOf)
-			.sum();
+		return computeOfAKind(4, dice);
 	}
 
 	public int smallStraight(final int d1, final int d2, final int d3, final int d4, final int d5) {
