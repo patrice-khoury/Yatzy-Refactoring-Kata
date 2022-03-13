@@ -9,98 +9,34 @@ public class Yatzy {
 		return Arrays.stream(dice).distinct().count() > 1 ? 0: 50;
 	}
 
-	public int ones(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		int sum = 0;
-		if (d1 == 1) {
-			sum++;
-		}
-		if (d2 == 1) {
-			sum++;
-		}
-		if (d3 == 1) {
-			sum++;
-		}
-		if (d4 == 1) {
-			sum++;
-		}
-		if (d5 == 1) {
-			sum++;
-		}
-
-		return sum;
+	private int sums(final int valueToSum, final int... dice) {
+		return Arrays.stream(dice)
+			.filter(value-> value == valueToSum)
+			.sum();
+	}
+	
+	public int ones(final int... dice) {
+		return sums(1, dice);
 	}
 
-	public int twos(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		int sum = 0;
-		if (d1 == 2) {
-			sum += 2;
-		}
-		if (d2 == 2) {
-			sum += 2;
-		}
-		if (d3 == 2) {
-			sum += 2;
-		}
-		if (d4 == 2) {
-			sum += 2;
-		}
-		if (d5 == 2) {
-			sum += 2;
-		}
-		return sum;
+	public int twos(final int... dice) {
+		return sums(2, dice);
 	}
 
-	public int threes(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		int s;
-		s = 0;
-		if (d1 == 3) {
-			s += 3;
-		}
-		if (d2 == 3) {
-			s += 3;
-		}
-		if (d3 == 3) {
-			s += 3;
-		}
-		if (d4 == 3) {
-			s += 3;
-		}
-		if (d5 == 3) {
-			s += 3;
-		}
-		return s;
+	public int threes(final int... dice) {
+		return sums(3, dice);
 	}
 
 	public int fours(final int... dice) {
-		int sum;
-		sum = 0;
-		for (int at = 0; at != 5; at++) {
-			if (dice[at] == 4) {
-				sum += 4;
-			}
-		}
-		return sum;
+		return sums(4, dice);
 	}
 
 	public int fives(final int... dice) {
-		int s = 0;
-		int i;
-		for (i = 0; i < dice.length; i++) {
-			if (dice[i] == 5) {
-				s = s + 5;
-			}
-		}
-		return s;
+		return sums(5, dice);
 	}
 
 	public int sixes(final int... dice) {
-		int sum = 0;
-		for (final int element : dice) {
-			if (element == 6) {
-				sum = sum + 6;
-			}
-		}
-		return sum;
+		return sums(6, dice);
 	}
 
 	public int score_pair(final int d1, final int d2, final int d3, final int d4, final int d5) {
