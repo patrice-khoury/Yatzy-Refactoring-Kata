@@ -68,13 +68,24 @@ public class Yatzy {
 		final Map<Integer, Integer> statistics = getStatistics(dice);
 		
 		return statistics.entrySet().stream()
-				.filter((statistic)-> statistic.getValue() > 1)
-				.map(Entry::getKey)
-				.map(value -> value * 2)
-				.mapToInt(Integer::valueOf)
-				.sum();
+			.filter((statistic)-> statistic.getValue() > 1)
+			.map(Entry::getKey)
+			.map(value -> value * 2)
+			.mapToInt(Integer::valueOf)
+			.sum();
 	}
 
+	public int three_of_a_kind(final int... dice) {
+		final Map<Integer, Integer> statistics = getStatistics(dice);
+		
+		return statistics.entrySet().stream()
+			.filter((statistic)-> statistic.getValue() == 3)
+			.map(Entry::getKey)
+			.map(value -> value * 3)
+			.mapToInt(Integer::valueOf)
+			.sum();
+	}
+	
 	public int four_of_a_kind(final int _1, final int _2, final int d3, final int d4, final int d5) {
 		int[] tallies;
 		tallies = new int[6];
@@ -86,22 +97,6 @@ public class Yatzy {
 		for (int i = 0; i < 6; i++) {
 			if (tallies[i] >= 4) {
 				return (i+1) * 4;
-			}
-		}
-		return 0;
-	}
-
-	public int three_of_a_kind(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		int[] t;
-		t = new int[6];
-		t[d1-1]++;
-		t[d2-1]++;
-		t[d3-1]++;
-		t[d4-1]++;
-		t[d5-1]++;
-		for (int i = 0; i < 6; i++) {
-			if (t[i] >= 3) {
-				return (i+1) * 3;
 			}
 		}
 		return 0;
