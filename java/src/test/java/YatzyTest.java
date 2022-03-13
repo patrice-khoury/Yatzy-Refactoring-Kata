@@ -71,30 +71,30 @@ public class YatzyTest {
 
     @Test
     public void one_pair() {
-        testYatzy(6, yatzy.score_pair(3,4,3,5,6));
-        testYatzy(10, yatzy.score_pair(5,3,3,3,5));
-        testYatzy(12, yatzy.score_pair(5,3,6,6,5));
-        testYatzy(6, yatzy.score_pair(3,3,3,3,1));
+        testYatzy(6, yatzy.scorePair(3,4,3,5,6));
+        testYatzy(10, yatzy.scorePair(5,3,3,3,5));
+        testYatzy(12, yatzy.scorePair(5,3,6,6,5));
+        testYatzy(6, yatzy.scorePair(3,3,3,3,1));
     }
 
     @Test
     public void two_Pair() {
-        testYatzy(16, yatzy.two_pair(3,3,5,4,5));
-        testYatzy(16, yatzy.two_pair(3,3,5,5,5));
+        testYatzy(16, yatzy.twoPair(3,3,5,4,5));
+        testYatzy(16, yatzy.twoPair(3,3,5,5,5));
     }
 
     @Test
     public void three_of_a_kind() {
-        testYatzy(9, yatzy.three_of_a_kind(3,3,3,4,5));
-        testYatzy(15, yatzy.three_of_a_kind(5,3,5,4,5));
-        testYatzy(9, yatzy.three_of_a_kind(3,3,3,3,5));
+        testYatzy(9, yatzy.threeOfAKind(3,3,3,4,5));
+        testYatzy(15, yatzy.threeOfAKind(5,3,5,4,5));
+        testYatzy(9, yatzy.threeOfAKind(3,3,3,3,5));
     }
 
     @Test
     public void four_of_a_knd() {
-        testYatzy(12, yatzy.four_of_a_kind(3,3,3,3,5));
-        testYatzy(20, yatzy.four_of_a_kind(5,5,5,4,5));
-        testYatzy(12, yatzy.four_of_a_kind(3,3,3,3,3));
+        testYatzy(12, yatzy.fourOfAKind(3,3,3,3,5));
+        testYatzy(20, yatzy.fourOfAKind(5,5,5,4,5));
+        testYatzy(12, yatzy.fourOfAKind(3,3,3,3,3));
     }
 
     @Test

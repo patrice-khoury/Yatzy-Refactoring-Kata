@@ -68,7 +68,7 @@ public class Yatzy {
 		return sums(6, dice);
 	}
 	
-	public int score_pair(final int... dice) {
+	public int scorePair(final int... dice) {
 		final Map<Integer, Integer> statistics = getStatistics(dice);
 		
 		return statistics.entrySet().stream()
@@ -79,15 +79,15 @@ public class Yatzy {
 			.orElse(0);
 	}
 
-	public int two_pair(final int... dice) {
+	public int twoPair(final int... dice) {
 		return computeOfAKind(2, dice);
 	}
 
-	public int three_of_a_kind(final int... dice) {
+	public int threeOfAKind(final int... dice) {
 		return computeOfAKind(3, dice);
 	}
 	
-	public int four_of_a_kind(final int... dice) {
+	public int fourOfAKind(final int... dice) {
 		return computeOfAKind(4, dice);
 	}
 
