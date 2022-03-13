@@ -6,16 +6,7 @@ public class Yatzy {
 	}
 
 	public int yatzy(final int... dice) {
-		final int[] counts = new int[6];
-		for (final int die : dice) {
-			counts[die-1]++;
-		}
-		for (int i = 0; i != 6; i++) {
-			if (counts[i] == 5) {
-				return 50;
-			}
-		}
-		return 0;
+		return Arrays.stream(dice).distinct().count() > 1 ? 0: 50;
 	}
 
 	public int ones(final int d1, final int d2, final int d3, final int d4, final int d5) {
