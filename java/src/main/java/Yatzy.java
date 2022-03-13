@@ -1,6 +1,26 @@
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Yatzy {
+	private int sums(final int valueToSum, final int... dice) {
+		return Arrays.stream(dice)
+			.filter(value-> value == valueToSum)
+			.sum();
+	}
+	
+	private Map<Integer, Integer> getStatistics(final int... dice) {
+		final Map<Integer, Integer> statistics = new HashMap<>(); 
+		
+		Arrays.stream(dice).forEach(value-> {
+			statistics.merge(value, 1, Integer::sum);
+		});
+		
+		return statistics;
+	}
+	
 	public int chance(final int... dice) {
 		return Arrays.stream(dice).sum();
 	}
@@ -9,12 +29,6 @@ public class Yatzy {
 		return Arrays.stream(dice).distinct().count() > 1 ? 0: 50;
 	}
 
-	private int sums(final int valueToSum, final int... dice) {
-		return Arrays.stream(dice)
-			.filter(value-> value == valueToSum)
-			.sum();
-	}
-	
 	public int ones(final int... dice) {
 		return sums(1, dice);
 	}
@@ -38,21 +52,16 @@ public class Yatzy {
 	public int sixes(final int... dice) {
 		return sums(6, dice);
 	}
-
-	public int score_pair(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		final int[] counts = new int[6];
-		counts[d1-1]++;
-		counts[d2-1]++;
-		counts[d3-1]++;
-		counts[d4-1]++;
-		counts[d5-1]++;
-		int at;
-		for (at = 0; at != 6; at++) {
-			if (counts[6-at-1] >= 2) {
-				return (6-at)*2;
-			}
-		}
-		return 0;
+	
+	public int score_pair(final int... dice) {
+		final Map<Integer, Integer> statistics = getStatistics(dice);
+		
+		return statistics.entrySet().stream()
+			.filter((statistic)-> statistic.getValue() == 2)
+			.map(Entry::getKey)
+			.max(Integer::compare)
+			.map(value -> value * 2)
+			.orElse(0);
 	}
 
 	public int two_pair(final int d1, final int d2, final int d3, final int d4, final int d5) {
