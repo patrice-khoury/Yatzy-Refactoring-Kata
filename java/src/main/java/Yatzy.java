@@ -64,25 +64,15 @@ public class Yatzy {
 			.orElse(0);
 	}
 
-	public int two_pair(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		final int[] counts = new int[6];
-		counts[d1-1]++;
-		counts[d2-1]++;
-		counts[d3-1]++;
-		counts[d4-1]++;
-		counts[d5-1]++;
-		int n = 0;
-		int score = 0;
-		for (int i = 0; i < 6; i += 1) {
-			if (counts[6-i-1] >= 2) {
-				n++;
-				score += 6-i;
-			}
-		}
-		if (n == 2) {
-			return score * 2;
-		}
-		return 0;
+	public int two_pair(final int... dice) {
+		final Map<Integer, Integer> statistics = getStatistics(dice);
+		
+		return statistics.entrySet().stream()
+				.filter((statistic)-> statistic.getValue() > 1)
+				.map(Entry::getKey)
+				.map(value -> value * 2)
+				.mapToInt(Integer::valueOf)
+				.sum();
 	}
 
 	public int four_of_a_kind(final int _1, final int _2, final int d3, final int d4, final int d5) {
