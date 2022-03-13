@@ -1,12 +1,8 @@
+import java.util.Arrays;
+
 public class Yatzy {
-	public int chance(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		int total = 0;
-		total += d1;
-		total += d2;
-		total += d3;
-		total += d4;
-		total += d5;
-		return total;
+	public int chance(final int... dice) {
+		return Arrays.stream(dice).sum();
 	}
 
 	public int yatzy(final int... dice) {
