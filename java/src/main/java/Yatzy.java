@@ -86,20 +86,15 @@ public class Yatzy {
 			.sum();
 	}
 	
-	public int four_of_a_kind(final int _1, final int _2, final int d3, final int d4, final int d5) {
-		int[] tallies;
-		tallies = new int[6];
-		tallies[_1-1]++;
-		tallies[_2-1]++;
-		tallies[d3-1]++;
-		tallies[d4-1]++;
-		tallies[d5-1]++;
-		for (int i = 0; i < 6; i++) {
-			if (tallies[i] >= 4) {
-				return (i+1) * 4;
-			}
-		}
-		return 0;
+	public int four_of_a_kind(final int... dice) {
+		final Map<Integer, Integer> statistics = getStatistics(dice);
+		
+		return statistics.entrySet().stream()
+			.filter((statistic)-> statistic.getValue() >= 4)
+			.map(Entry::getKey)
+			.map(value -> value * 4)
+			.mapToInt(Integer::valueOf)
+			.sum();
 	}
 
 	public int smallStraight(final int d1, final int d2, final int d3, final int d4, final int d5) {

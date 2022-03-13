@@ -94,7 +94,7 @@ public class YatzyTest {
     public void four_of_a_knd() {
         testYatzy(12, yatzy.four_of_a_kind(3,3,3,3,5));
         testYatzy(20, yatzy.four_of_a_kind(5,5,5,4,5));
-        testYatzy(9, yatzy.four_of_a_kind(3,3,3,3,3));
+        testYatzy(12, yatzy.four_of_a_kind(3,3,3,3,3));
     }
 
     @Test
