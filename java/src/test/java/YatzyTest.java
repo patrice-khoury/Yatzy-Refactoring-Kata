@@ -74,6 +74,7 @@ public class YatzyTest {
         testYatzy(6, yatzy.score_pair(3,4,3,5,6));
         testYatzy(10, yatzy.score_pair(5,3,3,3,5));
         testYatzy(12, yatzy.score_pair(5,3,6,6,5));
+        testYatzy(6, yatzy.score_pair(3,3,3,3,1));
     }
 
     @Test
