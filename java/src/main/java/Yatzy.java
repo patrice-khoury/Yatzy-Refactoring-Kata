@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -8,6 +9,11 @@ import java.util.function.BiPredicate;
 public class Yatzy {
 	private final BiPredicate<Entry<Integer, Integer>, Integer> filterNumberOfEntries = (statistic, nbEntries)-> statistic.getValue() >= nbEntries;
 	private final BiFunction<Integer, Integer, Integer> sumEntries = (value, number)-> value * number;
+	
+	private int sums(final int... dice) {
+		return Arrays.stream(dice)
+			.sum();
+	}
 	
 	private int sums(final int valueToSum, final int... dice) {
 		return Arrays.stream(dice)
@@ -43,7 +49,7 @@ public class Yatzy {
 		if (statistics.entrySet().size() == dice.length) {
 			final int maxValue = statistics.keySet().stream().max(Integer::compare).get();
 			if (type.getValueTest().test(maxValue, dice.length)) {
-				result = statistics.keySet().stream().reduce((v1, v2)-> v1 + v2).get();
+				result = sums(dice);
 			}
 		}
 		return result;
@@ -112,38 +118,19 @@ public class Yatzy {
 		return straight(StraightType.LARGE, dice);
 	}
 
-	public int fullHouse(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		int[] tallies;
-		boolean _2 = false;
-		int i;
-		int _2_at = 0;
-		boolean _3 = false;
-		int _3_at = 0;
-
-		tallies = new int[6];
-		tallies[d1-1] += 1;
-		tallies[d2-1] += 1;
-		tallies[d3-1] += 1;
-		tallies[d4-1] += 1;
-		tallies[d5-1] += 1;
-
-		for (i = 0; i != 6; i += 1) {
-			if (tallies[i] == 2) {
-				_2 = true;
-				_2_at = i+1;
+	public int fullHouse(final int... dice) {
+		int result = 0;
+		
+		final Map<Integer, Integer> statistics = getStatistics(dice);
+		if (statistics.entrySet().size() == 2) {
+			final int kinds = statistics.values().stream()
+				.sorted(Comparator.reverseOrder())
+				.reduce((nb1, nb2)-> nb1 - nb2)
+				.get();
+			if (kinds == 1) {
+				result = sums(dice);
 			}
 		}
-
-		for (i = 0; i != 6; i += 1) {
-			if (tallies[i] == 3) {
-				_3 = true;
-				_3_at = i+1;
-			}
-		}
-
-		if (_2 && _3) {
-			return _2_at * 2 + _3_at * 3;
-		}
-		return 0;
+		return result;
 	}
 }
