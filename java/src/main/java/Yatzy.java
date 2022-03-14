@@ -36,6 +36,19 @@ public class Yatzy {
 			.sum();
 	}
 	
+	private int straight(final StraightType type, final int... dice) {
+		int result = 0;
+		
+		final Map<Integer, Integer> statistics = getStatistics(dice);
+		if (statistics.entrySet().size() == dice.length) {
+			final int maxValue = statistics.keySet().stream().max(Integer::compare).get();
+			if (type.getValueTest().test(maxValue, dice.length)) {
+				result = statistics.keySet().stream().reduce((v1, v2)-> v1 + v2).get();
+			}
+		}
+		return result;
+	}
+	
 	public int chance(final int... dice) {
 		return Arrays.stream(dice).sum();
 	}
@@ -90,41 +103,13 @@ public class Yatzy {
 	public int fourOfAKind(final int... dice) {
 		return computeOfAKind(4, dice);
 	}
-
-	public int smallStraight(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		int[] tallies;
-		tallies = new int[6];
-		tallies[d1-1] += 1;
-		tallies[d2-1] += 1;
-		tallies[d3-1] += 1;
-		tallies[d4-1] += 1;
-		tallies[d5-1] += 1;
-		if (tallies[0] == 1 &&
-				tallies[1] == 1 &&
-				tallies[2] == 1 &&
-				tallies[3] == 1 &&
-				tallies[4] == 1) {
-			return 15;
-		}
-		return 0;
+	
+	public int smallStraight(final int... dice) {
+		return straight(StraightType.SMALL, dice);
 	}
 
-	public int largeStraight(final int d1, final int d2, final int d3, final int d4, final int d5) {
-		int[] tallies;
-		tallies = new int[6];
-		tallies[d1-1] += 1;
-		tallies[d2-1] += 1;
-		tallies[d3-1] += 1;
-		tallies[d4-1] += 1;
-		tallies[d5-1] += 1;
-		if (tallies[1] == 1 &&
-				tallies[2] == 1 &&
-				tallies[3] == 1 &&
-				tallies[4] == 1
-				&& tallies[5] == 1) {
-			return 20;
-		}
-		return 0;
+	public int largeStraight(final int... dice) {
+		return straight(StraightType.LARGE, dice);
 	}
 
 	public int fullHouse(final int d1, final int d2, final int d3, final int d4, final int d5) {
