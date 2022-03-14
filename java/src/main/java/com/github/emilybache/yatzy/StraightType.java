@@ -1,3 +1,5 @@
+package com.github.emilybache.yatzy;
+
 import java.util.function.BiPredicate;
 
 public enum StraightType {

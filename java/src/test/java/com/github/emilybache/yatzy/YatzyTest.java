@@ -1,7 +1,11 @@
+package com.github.emilybache.yatzy;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.github.emilybache.yatzy.Yatzy;
 
 public class YatzyTest {
 	private Yatzy yatzy;
